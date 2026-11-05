@@ -1,0 +1,4 @@
+# Dependências do back-end (api/convert.py)
+Flask>=3.0,<4
+# O PyQt6 traz o compilador "uic" (o mesmo usado pelo pyuic6).
+PyQt6>=6.6,<7

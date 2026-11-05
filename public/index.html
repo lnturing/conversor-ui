@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ui2py6 - Conversor .ui</title>
+  <link rel="icon" type="image/svg+xml" href="images/favicon.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-theme="dark">
+
+<div class="topbar">
+  <div class="brand"><img src="images/logo.svg" alt=""> <span>Ui2py6</span></div>
+  <div class="topbar-actions">
+    <button class="icon-btn" id="btnTheme" aria-label="Alternar entre modo claro e escuro" title="Alternar tema">
+      <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.4M12 19.1v2.4M4.2 4.2l1.7 1.7M18.1 18.1l1.7 1.7M2.5 12h2.4M19.1 12h2.4M4.2 19.8l1.7-1.7M18.1 5.9l1.7-1.7" stroke-linecap="round"/></svg>
+      <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M20 14.3A8.3 8.3 0 1 1 9.7 4a6.6 6.6 0 0 0 10.3 10.3Z" stroke-linejoin="round"/></svg>
+    </button>
+    <button class="about-btn" id="btnAbout">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.8v.1" stroke-linecap="round"/></svg>
+      Sobre
+    </button>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Ferramenta compatível com o PyQt6</div>
+    <h1>Converta suas interfaces&nbsp; <span class="accent">.ui </span> para <span class="accent">Python</span> de maneira simples, rápida e online.</h1>
+    <p class="lede">Arraste o arquivo <code>.ui</code> exportado do Qt Designer e receba o código Python pronto,
+     no formato do PyQt6. Sem precisar instalar nada e sem usar terminal.</p>
+  </header>
+
+  <section class="sheet" id="sheet">
+    <span class="corner-bl"></span><span class="corner-br"></span>
+    <svg class="sheet-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect x="9" y="6" width="30" height="36" rx="1" stroke="currentColor" stroke-width="1.4"/>
+      <path d="M15 16h18M15 23h18M15 30h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
+      <path d="M24 34v9m0 0-4-4m4 4 4-4" stroke="#F2A93B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    <h2>Arraste o arquivo .ui aqui</h2>
+    <p>ou selecione manualmente clicando em "Selecionar arquivo" </p>
+    <div class="sheet-actions">
+      <button class="btn" id="btnSelect" type="button">Selecionar arquivo</button>
+      <button class="btn btn-ghost" id="btnTutorial" type="button">Tutorial</button>
+    </div>
+    <input type="file" id="fileInput" accept=".ui" class="visually-hidden" aria-label="Selecionar arquivo .ui">
+    <div class="hint">.ui — formato XML exportado do Qt Designer / Qt Creator (até 1 MB)</div>
+    <div class="status" id="status" role="status" aria-live="polite"></div>
+  </section>
+
+  <section class="results" id="results">
+    <div class="file-strip">
+      <div><span id="fileName">—</span> <span class="meta" id="fileMeta"></span></div>
+      <button class="clear" id="btnClear" type="button">carregar outro arquivo</button>
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-head"><h3>Árvore de widgets</h3></div>
+        <div class="tree-body" id="treeBody"></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <div class="head-left"><div class="dots"><span></span><span></span><span></span></div><h3 id="codeTitle">código_gerado.py</h3></div>
+          <div class="btn-row">
+            <button class="btn-sm" id="btnCopy" type="button">Copiar</button>
+            <button class="btn-sm primary" id="btnDownload" type="button">Baixar .py</button>
+          </div>
+        </div>
+        <pre class="code-body" id="codeBody"></pre>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <span>conversão feita no servidor com o compilador <code>uic</code> do PyQt6 (o mesmo do <code>pyuic6</code>)</span>
+    <span>o arquivo enviado não é armazenado</span>
+  </footer>
+
+</div>
+
+<!-- Modal: Sobre nós -->
+<div class="modal-overlay" id="aboutOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="aboutTitle">
+    <button class="modal-close" id="btnCloseAbout" type="button" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5 5 19" stroke-linecap="round"/></svg>
+    </button>
+    <div class="modal-eyebrow">Sobre</div>
+    <h2 id="aboutTitle">Por que criamos esse conversor?</h2>
+    <p>Nosso sistema foi desenvolvido para facilitar e agilizar a conversão de arquivos <code>.ui</code>, criados no Qt Designer, em código Python compatível com PyQt6.
+A ferramenta permite transformar interfaces gráficas desenvolvidas pelo QtDesigner em código Python de forma rápida, prática e online facilitando a integração entre o design da interface e o desenvolvimento da aplicação.
+O projeto foi pensado especialmente para estudantes e desenvolvedores que trabalham com Python e PyQt6, oferecendo uma solução mais simples, facilitando o processo.</p>
+    <div class="modal-section-label">Criadores</div>
+    <ul class="creators">
+      <li><span class="idx">01</span> <span>Gabriela Moura<span class="role"> — Front-end</span></span></li>
+      <li><span class="idx">02</span> <span>Pedro Davi<span class="role"> — Back-end</span></span></li>
+      <li><span class="idx">03</span> <span>Alana Renata<span class="role"> — Front-end</span></span></li>
+      <li><span class="idx">04</span> <span>Francisca Eduarda<span class="role"> — Front-end</span></span></li>
+      <li><span class="idx">05</span> <span>Clayton Maciel<span class="role"> — Orientação</span></span></li>
+    </ul>
+  </div>
+</div>
+
+<!-- Modal: Tutorial -->
+<div class="modal-overlay" id="tutorialOverlay">
+  <div class="modal modal-lg" role="dialog" aria-modal="true" aria-labelledby="tutorialTitle">
+    <button class="modal-close" id="btnCloseTutorial" type="button" aria-label="Fechar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 5l14 14M19 5 5 19" stroke-linecap="round"/></svg>
+    </button>
+    <div class="modal-eyebrow">Tutorial</div>
+    <h2 id="tutorialTitle">Como converter seu .ui em 3 passos</h2>
+
+    <div class="steps">
+      <div class="step">
+        <div class="step-icon"><img src="images/icon-file.svg" alt=""><span class="step-num">1</span></div>
+        <h4>Upload</h4>
+        <p>Arraste o arquivo .ui exportado do Qt Designer até a área tracejada, ou clique em "Selecionar arquivo".</p>
+      </div>
+      <div class="step">
+        <div class="step-icon"><img src="images/icon-file.svg" alt=""><span class="step-num">2</span></div>
+        <h4>Converter</h4>
+        <p>O servidor converte o arquivo e a página mostra a árvore de widgets e o código Python para PyQt6.</p>
+      </div>
+      <div class="step">
+        <div class="step-icon"><img src="images/icon-file.svg" alt=""><span class="step-num">3</span></div>
+        <h4>Download</h4>
+        <p>Clique em "Baixar .py" para salvar o arquivo pronto e usar direto no seu projeto PyQt6.</p>
+      </div>
+    </div>
+
+    <div class="tutorial-more">
+      <p>Se ainda tiver dúvidas e/ou quiser entender melhor o passo a passo, clique em "Saiba mais" para baixar um tutorial completo, desde a escolha do arquivo até o download.</p>
+      <a class="btn" id="btnSaibaMais" href="docs/tutorial.pdf" target="_blank" rel="noopener" download="tutorial-conversor-ui-pyqt6.pdf">Saiba mais</a>
+    </div>
+  </div>
+</div>
+
+<script src="js/script.js"></script>
+</body>
+</html>
