@@ -1,0 +1,11 @@
+[project]
+name = "conversor-ui-pyqt6"
+version = "1.0.0"
+requires-python = ">=3.10"
+dependencies = [
+  "Flask>=3.0,<4",
+  "PyQt6>=6.6,<7",
+]
+
+[tool.vercel]
+entrypoint = "api.convert:app"
