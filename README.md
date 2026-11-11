@@ -6,12 +6,12 @@ Site para alunos: envie um arquivo `.ui` do Qt Designer e baixe o `.py` compatí
 public/            front-end (estático)
   index.html       estrutura da página
   css/style.css    aparência (tema escuro/claro)
-  js/script.js     upload, envio à API, tela de resultado
+  js/script.js     upload (até 10 arquivos), envio à API, lista de resultados, download .py/.zip
   images/          logo e ícones
   docs/tutorial.pdf  PDF aberto pelo botão "Saiba mais"
 api/
-  convert.py       back-end Python (Flask): POST /api/convert (recebe o .ui, devolve o .py)
-requirements.txt   dependências Python (Flask e PyQt6)
+  convert.py       back-end Python (Flask) com o conversor próprio: POST /api/convert (recebe o .ui, devolve o .py executável)
+requirements.txt   dependências Python (só o Flask)
 vercel.json        configuração da hospedagem
 ```
 

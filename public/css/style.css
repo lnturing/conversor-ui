@@ -54,6 +54,7 @@ body[data-theme="light"]{
 }
 
 *{ box-sizing: border-box; }
+[hidden]{ display:none !important; }
 
 body{
   margin:0;
@@ -392,4 +393,46 @@ footer{
 
 @media (prefers-reduced-motion: reduce){
   *{ transition: none !important; animation: none !important; }
+}
+
+/* ===== Vários arquivos: lista, erro e ações ===== */
+.strip-actions{ display:flex; align-items:center; gap:16px; flex-wrap:wrap; }
+
+.file-list{ display:flex; flex-wrap:wrap; gap:10px; margin: -4px 0 22px; }
+.chip{
+  display:inline-flex; align-items:stretch; max-width: 100%;
+  border: 1px solid var(--line-soft); border-radius: 999px; overflow:hidden;
+  background: color-mix(in srgb, var(--panel) 85%, transparent);
+  font-family: var(--font-mono); font-size: 12px;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.chip:hover{ border-color: var(--accent); }
+.chip.active{
+  border-color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 16%, var(--panel));
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 14%, transparent);
+}
+.chip.error{ border-color: color-mix(in srgb, var(--danger) 55%, transparent); }
+.chip.error.active{ box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 16%, transparent); }
+.chip button{ font: inherit; color: var(--ink); background: transparent; border: 0; cursor: pointer; }
+.chip-pick{ display:flex; align-items:center; gap:8px; padding: 8px 14px; min-width: 0; }
+.chip-name{ overflow:hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 220px; }
+.chip-dot{
+  flex:none; width:18px; height:18px; border-radius:50%;
+  display:inline-flex; align-items:center; justify-content:center;
+  font-size: 10px; font-weight: 700;
+  background: color-mix(in srgb, var(--mint) 22%, transparent); color: var(--mint);
+}
+.chip.error .chip-dot{ background: color-mix(in srgb, var(--danger) 22%, transparent); color: var(--danger); }
+.chip-dl{
+  padding: 0 12px; border-left: 1px solid var(--line-soft) !important; color: var(--accent) !important; font-size: 14px;
+}
+.chip-dl:hover{ background: color-mix(in srgb, var(--accent) 18%, transparent) !important; }
+.chip button:focus-visible{ outline: 2px solid var(--accent); outline-offset: -2px; }
+
+.file-error{
+  margin-bottom: 22px; padding: 16px 20px; border-radius: var(--radius);
+  border: 1px solid color-mix(in srgb, var(--danger) 55%, transparent);
+  background: color-mix(in srgb, var(--danger) 9%, transparent);
+  color: var(--danger); font-family: var(--font-mono); font-size: 13px;
 }

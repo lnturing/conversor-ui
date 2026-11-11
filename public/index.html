@@ -42,24 +42,30 @@
       <path d="M15 16h18M15 23h18M15 30h10" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>
       <path d="M24 34v9m0 0-4-4m4 4 4-4" stroke="#F2A93B" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
     </svg>
-    <h2>Arraste o arquivo .ui aqui</h2>
-    <p>ou selecione manualmente clicando em "Selecionar arquivo" </p>
+    <h2>Arraste os arquivos .ui aqui</h2>
+    <p>ou selecione manualmente clicando em "Selecionar arquivos" (até 10 por vez)</p>
     <div class="sheet-actions">
-      <button class="btn" id="btnSelect" type="button">Selecionar arquivo</button>
+      <button class="btn" id="btnSelect" type="button">Selecionar arquivos</button>
       <button class="btn btn-ghost" id="btnTutorial" type="button">Tutorial</button>
     </div>
-    <input type="file" id="fileInput" accept=".ui" class="visually-hidden" aria-label="Selecionar arquivo .ui">
-    <div class="hint">.ui — formato XML exportado do Qt Designer / Qt Creator (até 1 MB)</div>
+    <input type="file" id="fileInput" accept=".ui" multiple class="visually-hidden" aria-label="Selecionar arquivos .ui">
+    <div class="hint">.ui — formato XML exportado do Qt Designer / Qt Creator (até 10 arquivos, 1 MB cada)</div>
     <div class="status" id="status" role="status" aria-live="polite"></div>
   </section>
 
   <section class="results" id="results">
     <div class="file-strip">
-      <div><span id="fileName">—</span> <span class="meta" id="fileMeta"></span></div>
-      <button class="clear" id="btnClear" type="button">carregar outro arquivo</button>
+      <div><span id="summary">—</span> <span class="meta" id="fileMeta"></span></div>
+      <div class="strip-actions">
+        <button class="btn-sm primary" id="btnZip" type="button" hidden>Baixar tudo (.zip)</button>
+        <button class="clear" id="btnClear" type="button">carregar outros arquivos</button>
+      </div>
     </div>
 
-    <div class="panels">
+    <div class="file-list" id="fileList" hidden></div>
+    <div class="file-error" id="fileError" hidden></div>
+
+    <div class="panels" id="panels">
       <div class="panel">
         <div class="panel-head"><h3>Árvore de widgets</h3></div>
         <div class="tree-body" id="treeBody"></div>
@@ -79,7 +85,7 @@
   </section>
 
   <footer>
-    <span>conversão feita no servidor com o compilador <code>uic</code> do PyQt6 (o mesmo do <code>pyuic6</code>)</span>
+    <span>conversão feita no servidor, direto do arquivo <code>.ui</code> — sem instalar nada</span>
     <span>o arquivo enviado não é armazenado</span>
   </footer>
 
@@ -120,17 +126,17 @@ O projeto foi pensado especialmente para estudantes e desenvolvedores que trabal
       <div class="step">
         <div class="step-icon"><img src="images/icon-file.svg" alt=""><span class="step-num">1</span></div>
         <h4>Upload</h4>
-        <p>Arraste o arquivo .ui exportado do Qt Designer até a área tracejada, ou clique em "Selecionar arquivo".</p>
+        <p>Arraste até 10 arquivos .ui exportados do Qt Designer até a área tracejada, ou clique em "Selecionar arquivos".</p>
       </div>
       <div class="step">
         <div class="step-icon"><img src="images/icon-file.svg" alt=""><span class="step-num">2</span></div>
         <h4>Converter</h4>
-        <p>O servidor converte o arquivo e a página mostra a árvore de widgets e o código Python para PyQt6.</p>
+        <p>O servidor converte cada arquivo e a página mostra a árvore de widgets e o código Python para PyQt6.</p>
       </div>
       <div class="step">
         <div class="step-icon"><img src="images/icon-file.svg" alt=""><span class="step-num">3</span></div>
         <h4>Download</h4>
-        <p>Clique em "Baixar .py" para salvar o arquivo pronto e usar direto no seu projeto PyQt6.</p>
+        <p>Clique em "Baixar .py" (ou em "Baixar tudo (.zip)" se enviou vários). O arquivo já abre a janela ao ser executado.</p>
       </div>
     </div>
 
